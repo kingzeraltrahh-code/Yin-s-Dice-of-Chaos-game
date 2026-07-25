@@ -131,9 +131,17 @@
     </header>
 
     <!-- Left Sidebar: Turn Order -->
-    <section>
-        <h2>Turn Order</h2>
-        <div id="turnOrder">No players yet.</div>
+    <<section>
+  <h2>Turn Order</h2>
+  <div id="turnOrder">No players yet.</div>
+  <button onclick="nextTurn()">Next Turn</button>
+
+  <!-- Game Log below turn order -->
+  <div id="gameLog" style="height:200px; overflow-y:auto; background:#0d1b2a; padding:10px; border-radius:8px; margin-top:10px;">
+    <em>No events yet...</em>
+  </div>
+</section>
+
         <button onclick="nextTurn()">Next Turn</button>
 
         <!-- Game Log below turn order -->
