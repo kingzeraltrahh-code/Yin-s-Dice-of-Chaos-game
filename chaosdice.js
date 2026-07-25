@@ -197,6 +197,45 @@ function nextTurn() {
     showCurrentTurn();
 }
 
+function logEvent(message) {
+    let log = document.getElementById("gameLog");
+    let entry = document.createElement("div");
+    entry.textContent = message;
+    log.appendChild(entry);
+    log.scrollTop = log.scrollHeight; // auto-scroll to latest
+}
+
+function cannonFire() {
+    let target = document.getElementById("targetPlayer").value;
+    removeHeart(target + "-hearts");
+    logEvent("💥 Cannon Fire hit " + target);
+}
+
+function drinkRum() {
+    let target = document.getElementById("targetPlayer").value;
+    addHeart(target + "-hearts");
+    logEvent("🍺 " + target + " drank rum and gained +❤️");
+}
+
+function mutiny() {
+    let p1 = document.getElementById("targetPlayer").value,
+        p2 = document.getElementById("targetPlayer2").value;
+    if (p1 === p2) return logEvent("⚠️ Mutiny failed: same player chosen");
+
+    let roll1 = Math.floor(Math.random() * 6) + 1,
+        roll2 = Math.floor(Math.random() * 6) + 1;
+    while (roll1 === roll2) {
+        roll1 = Math.floor(Math.random() * 6) + 1;
+        roll2 = Math.floor(Math.random() * 6) + 1;
+    }
+
+    logEvent(`⚔️ Mutiny! ${p1} rolled ${roll1}, ${p2} rolled ${roll2}`);
+    if (roll1 < roll2) { removeHeart(p1 + "-hearts");
+        logEvent(`${p1} lost a ❤️`); } else { removeHeart(p2 + "-hearts");
+        logEvent(`${p2} lost a ❤️`); }
+}
+
+
 // Timer
 function startTimer() {
     clearInterval(countdown);
