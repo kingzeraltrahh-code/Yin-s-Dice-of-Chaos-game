@@ -46,7 +46,24 @@ function updateDropdowns() {
 // Hearts, Shield, VP
 function addHeart(id) { let c = document.getElementById(id); let h = (c.textContent.match(/❤️/g) || []).length; if (h < 5) c.textContent += "❤️"; }
 
-function removeHeart(id) { let c = document.getElementById(id); let h = (c.textContent.match(/❤️/g) || []).length; if (h > 0) c.textContent = c.textContent.slice(0, -2); if (h - 1 <= 0) markEliminated(id.replace("-hearts", "")); }
+function removeHeart(id) {
+    let player = id.replace("-hearts", "");
+    let shieldCell = document.getElementById(player + "-shield");
+    let heartCell = document.getElementById(id);
+
+    // If shield is active, consume it instead of losing a heart
+    if (shieldCell.textContent === "🛡️") {
+        shieldCell.textContent = "";
+        alert(player + " blocked the attack with a shield!");
+        return;
+    }
+
+    // Otherwise remove a heart
+    let hearts = (heartCell.textContent.match(/❤️/g) || []).length;
+    if (hearts > 0) heartCell.textContent = heartCell.textContent.slice(0, -2);
+    if (hearts - 1 <= 0) markEliminated(player);
+}
+
 
 function toggleShield(id) {
     let c = document.getElementById(id);
